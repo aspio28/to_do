@@ -19,14 +19,14 @@ export class TasksController {
   }
   @Post()
   creteTask(@Body() newTask: createTaskDto) {
-    this.taskService.createTask(newTask.title, newTask.description);
+    return this.taskService.createTask(newTask);
   }
   @Delete(':id')
-  deleteTask(@Param('id') id: string) {
-    this.taskService.deleteTask(id);
+  deleteTask(@Param('id') id: number) {
+    return this.taskService.deleteTask(id);
   }
   @Patch(':id')
-  updateTask(@Param('id') id: string, @Body() updatedFields: updateTaskDto) {
+  updateTask(@Param('id') id: number, @Body() updatedFields: updateTaskDto) {
     return this.taskService.updateTask(id, updatedFields);
   }
 }

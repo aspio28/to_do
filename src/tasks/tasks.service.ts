@@ -1,35 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { Task } from './task.entity';
 import { updateTaskDto } from './dto/task.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TasksService {
-  private tasks: Task[] = [
-    {
-      id: '1',
-      title: 'madrasahs',
-      description: 'sahshshhs',
-    },
-  ];
+  constructor(@InjectRepository(Task) private taskRep: Repository<Task>) {}
   getTasks() {
-    return this.tasks;
+    return this.taskRep.find();
   }
-  createTask(title: string, description: string) {
-    const task = {
-      id: new Date().toISOString(),
-      title,
-      description,
-    };
-    this.tasks.push(task);
+  createTask(body: any) {
+    const newTask = this.taskRep.create(body);
+    return this.taskRep.save(newTask);
   }
-  updateTask(id: string, updatedFields: updateTaskDto): Task {
-    const task = this.tasks.find((task) => task.id === id);
-    const newTask = Object.assign(task, updatedFields);
-    this.tasks.map((task) => (task.id === id ? newTask : task));
-
-    return newTask;
+  async updateTask(id: number, updatedFields: updateTaskDto) {
+    const changeTask = await this.taskRep.findOne(id);
+    this.taskRep.merge(changeTask, updatedFields);
+    return this.taskRep.save(changeTask);
   }
-  deleteTask(id: string) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+  async deleteTask(id: number) {
+    await this.taskRep.delete(id);
+    return true;
   }
 }
