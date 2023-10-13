@@ -20,7 +20,6 @@ export class TasksService {
     return this.taskRep.save(changeTask);
   }
   async deleteTask(id: number) {
-    await this.taskRep.delete(id);
-    return true;
+    return await this.taskRep.delete(id);
   }
 }

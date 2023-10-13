@@ -23,11 +23,7 @@ export class TasksController {
   }
   @Delete(':id')
   deleteTask(@Param('id') id: number) {
-    if (this.taskService.deleteTask(id)) {
-      return 'Eliminated';
-    } else {
-      return 'The ID does not exist';
-    }
+    return this.taskService.deleteTask(id);
   }
   @Patch(':id')
   updateTask(@Param('id') id: number, @Body() updatedFields: updateTaskDto) {
