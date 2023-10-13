@@ -15,7 +15,7 @@ export class TasksController {
   constructor(private taskService: TasksService) {}
   @Get()
   returnTasks() {
-    return this.taskService;
+    return this.taskService.getTasks();
   }
   @Post()
   creteTask(@Body() newTask: createTaskDto) {
@@ -23,7 +23,11 @@ export class TasksController {
   }
   @Delete(':id')
   deleteTask(@Param('id') id: number) {
-    return this.taskService.deleteTask(id);
+    if (this.taskService.deleteTask(id)) {
+      return 'Eliminated';
+    } else {
+      return 'The ID does not exist';
+    }
   }
   @Patch(':id')
   updateTask(@Param('id') id: number, @Body() updatedFields: updateTaskDto) {

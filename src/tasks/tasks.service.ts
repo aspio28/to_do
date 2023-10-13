@@ -15,7 +15,7 @@ export class TasksService {
     return this.taskRep.save(newTask);
   }
   async updateTask(id: number, updatedFields: updateTaskDto) {
-    const changeTask = await this.taskRep.findOne(id);
+    const changeTask = await this.taskRep.findOne({ where: { id: id } });
     this.taskRep.merge(changeTask, updatedFields);
     return this.taskRep.save(changeTask);
   }
