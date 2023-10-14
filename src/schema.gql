@@ -16,7 +16,7 @@ type Query {
 type Mutation {
   createTask(taskInput: createTaskDto!): Task!
   updateTask(updateInput: updateTaskDto!): Task!
-  deleteTask(id: Float!): Task!
+  deleteTask(id: Int!): Boolean!
 }
 
 input createTaskDto {

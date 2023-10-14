@@ -16,10 +16,15 @@ export class TasksService {
   }
   async updateTask(id: number, updatedFields: updateTaskDto) {
     const changeTask = await this.taskRep.findOne({ where: { id: id } });
-    this.taskRep.merge(changeTask, updatedFields);
-    return this.taskRep.save(changeTask);
+    if (changeTask) {
+      this.taskRep.merge(changeTask, updatedFields);
+      return await this.taskRep.save(changeTask);
+    } else {
+      throw new Error('Task not found');
+    }
   }
   async deleteTask(id: number) {
-    return await this.taskRep.delete(id);
+    const deleteResult = await this.taskRep.delete(id);
+    return deleteResult.affected == 1;
   }
 }

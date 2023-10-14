@@ -6,7 +6,7 @@ export const PostgresDataSource = new DataSource({
   username: 'Jorge',
   password: 'postgres',
   database: 'to_do',
-  migrations: ['migrations/**'],
+  migrations: ['dist/**/migrations/*.js'],
   entities: ['dist/**/*.entity{.ts,.js}'],
 });
 PostgresDataSource.initialize()

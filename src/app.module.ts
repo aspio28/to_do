@@ -20,7 +20,7 @@ import { join } from 'path';
       password: 'postgres',
       database: 'to_do',
       entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: false,
+      synchronize: true,
       retryDelay: 3000,
       retryAttempts: 10,
     }),
